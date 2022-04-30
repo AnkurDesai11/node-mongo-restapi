@@ -39,5 +39,27 @@ router.post("/course", async (req, res) => {
     }
 });
 
+
+//delete course
+router.delete("/courses/:courseId", async (req, res) => {
+    try {
+        await Course.deleteOne({ _id: req.params.courseId });
+        res.status(200).json({ message: "course deleted" });
+    } catch (excep) {
+        res.json(excep)
+    }
+});
+
+//update course
+router.put("/courses/:courseId", async (req, res) => {
+    const courseId = req.params.courseId;
+    try {
+        const updatedCourse = await Course.updateOne({ _id: courseId }, req.body);
+        res.json(updatedCourse);
+    } catch (excep) {
+        res.json(excep)
+    }
+});
+
 //exporting the module
 module.exports = router;
